@@ -1,0 +1,11 @@
+ddmani_blog_homepage:
+    pattern:  /
+    defaults: { _controller: ddmaniBlogBundle:Blog:index }
+
+ddmani_blog_backoffice:
+    pattern:  /bo/
+    defaults: { _controller: ddmaniBlogBundle:BlogAdmin:index }
+
+ddmani_blog_backoffice2:
+    pattern:  /bo2/
+    defaults: { _controller: ddmaniBlogBundle:Posts:index }

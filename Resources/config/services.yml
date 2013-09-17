@@ -1,0 +1,7 @@
+parameters:
+#    ddmani_blog.example.class: ddmani\BlogBundle\Example
+
+services:
+#    ddmani_blog.example:
+#        class: %ddmani_blog.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

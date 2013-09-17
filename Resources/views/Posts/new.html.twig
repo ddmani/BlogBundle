@@ -1,0 +1,40 @@
+{% extends "ddmaniBlogBundle::layout.html.twig" %}
+
+{% block body -%}
+    <h1>Posts creation</h1>
+    
+    {{ form(form,{'attr':{"id":"formulaireajout" }}) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('post') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+<script language="javascript">
+    $(document).ready(function(){ 
+        $("#formulaireajout").submit(function(){
+            $.ajax({
+                    url: $(this).attr('action'), 
+                    type: $(this).attr('method'), 
+                    data: $(this).serialize(), 
+                    cache: false,
+                    success : function(code_html, statut){ 
+                        /*$('#liste_commentaires').html(code_html);*/
+                        alert("ok");
+                    },
+
+                    error : function(resultat, statut, erreur){
+                        alert("shit");
+                    }
+             });
+             return false; // j'empêche le navigateur de soumettre lui-même le formulaire   
+         });
+
+    });
+   
+</script>
+
+{% endblock %}
