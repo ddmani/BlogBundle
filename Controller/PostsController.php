@@ -179,6 +179,7 @@ class PostsController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $entity = $em->getRepository('ddmaniBlogBundle:Posts')->find($id);
+            $entity->setPostDateModify(new \Datetime());
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Posts entity.');

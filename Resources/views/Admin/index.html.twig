@@ -1,6 +1,33 @@
 {% extends "ddmaniBlogBundle::layout.html.twig" %}
 {% block blog %}
-Blog homepage
-{{test}}
-{% include "ddmaniBlogBundle:Posts:index.html.twig" %}
+    Blog homepage
+    {{test}}
+    
+    <div id="postlist">
+    {{ render(controller('ddmaniBlogBundle:Posts:index')) }}
+    </div>
+    <div id="actioncontent">
+    {{ render(controller('ddmaniBlogBundle:Posts:show',{'id': 1})) }}
+    </div>
+<script language="javascript">
+    $(document).ready(function(){ 
+        $("#postlist").on("click","a",function(){
+            $.ajax({
+                    url: $(this).attr('href'), 
+                    type: 'GET', 
+                    data: $(this).serialize(), 
+                    cache: false,
+                    success : function(code_html, statut){ 
+                        $('#actioncontent').html(code_html);
+                    },
+                    error : function(resultat, statut, erreur){
+                        alert("erreur");
+                    }
+             });
+             return false; // Bloquage soumission du formulaire 
+         });
+
+    });
+   
+</script>
 {% endblock blog %}

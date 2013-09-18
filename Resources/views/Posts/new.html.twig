@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Posts creation</h1>
     
-    {{ form(form,{'attr':{"id":"formulaireajout" }}) }}
+    {{ form(form,{'attr':{"id":"addform" }}) }}
 
         <ul class="record_actions">
     <li>
@@ -15,7 +15,7 @@
 
 <script language="javascript">
     $(document).ready(function(){ 
-        $("#formulaireajout").submit(function(){
+        $("#addform").submit(function(){
             $.ajax({
                     url: $(this).attr('action'), 
                     type: $(this).attr('method'), 
@@ -27,10 +27,10 @@
                     },
 
                     error : function(resultat, statut, erreur){
-                        alert("shit");
+                        alert("erreur");
                     }
              });
-             return false; // j'empêche le navigateur de soumettre lui-même le formulaire   
+             return false; // Bloquage soumission du formulaire   
          });
 
     });

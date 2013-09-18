@@ -3,14 +3,49 @@
 {% block body -%}
     <h1>Posts edit</h1>
 
-    {{ form(edit_form) }}
+    {{ form(edit_form,{'attr':{"id":"editform" }}) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('post') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('post') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+    <script language="javascript">
+        $(document).ready(function(){ 
+            $("#editform").submit(function(){
+                $.ajax({
+                        url: $(this).attr('action'), 
+                        type: $(this).attr('method'), 
+                        data: $(this).serialize(), 
+                        cache: false,
+                        success : function(code_html, statut){ 
+                            if ($("#postlist")){
+                                $.ajax({
+                                    url: '{{ path("post") }}', 
+                                    type: 'GET', 
+                                    data: $(this).serialize(), 
+                                    cache: false,
+                                    success : function(code_html, statut){ 
+                                        $('#postlist').html(code_html);
+                                    },
+                                    error : function(resultat, statut, erreur){
+                                        alert("erreur");
+                                    }
+                                });
+                            }
+                        },
+
+                        error : function(resultat, statut, erreur){
+                            alert("erreur");
+                        }
+                 });
+                 return false; // Bloquage soumission du formulaire   
+             });
+
+        });
+
+    </script>
 {% endblock %}
