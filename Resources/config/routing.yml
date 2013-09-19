@@ -2,6 +2,10 @@ ddmani_blog_homepage:
     pattern:  /
     defaults: { _controller: ddmaniBlogBundle:Blog:index }
 
+ddmani_blog_post:
+    pattern:  /postpage/{id}/
+    defaults: { _controller: ddmaniBlogBundle:Blog:postshow }
+
 ddmani_blog_backoffice:
     pattern:  /bo/
     defaults: { _controller: ddmaniBlogBundle:BlogAdmin:index }

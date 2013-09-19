@@ -1,0 +1,13 @@
+{% extends "ddmaniBlogBundle::layout.html.twig" %}
+{% block blog %}
+    <h1>Post</h1>
+
+    <div id="postpage">
+        <div id="post">
+            {{ render(controller('ddmaniBlogBundle:Posts:show',{'id': id })) }}
+        </div>
+        <div id="comments">
+            {{ render(controller('ddmaniBlogBundle:Comment:new',{'id': id })) }}
+        </div>
+    </div>
+{% endblock blog %}

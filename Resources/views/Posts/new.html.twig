@@ -22,8 +22,20 @@
                     data: $(this).serialize(), 
                     cache: false,
                     success : function(code_html, statut){ 
-                        /*$('#liste_commentaires').html(code_html);*/
-                        alert("ok");
+                        if ($("#postlist")){
+                                $.ajax({
+                                    url: '{{ path("post") }}', 
+                                    type: 'GET', 
+                                    data: $(this).serialize(), 
+                                    cache: false,
+                                    success : function(code_html, statut){ 
+                                        $('#postlist').html(code_html);
+                                    },
+                                    error : function(resultat, statut, erreur){
+                                        alert("erreur");
+                                    }
+                                });
+                            }
                     },
 
                     error : function(resultat, statut, erreur){

@@ -1,10 +1,10 @@
 {% extends "ddmaniBlogBundle::layout.html.twig" %}
 {% block blog %}
-    Blog homepage
+    Blog admin homepage
     {{test}}
     
     <div id="postlist">
-    {{ render(controller('ddmaniBlogBundle:Posts:index')) }}
+    {{ render(controller('ddmaniBlogBundle:Posts:index',{'adminpage': 'admin'})) }}
     </div>
     <div id="actioncontent">
     {{ render(controller('ddmaniBlogBundle:Posts:show',{'id': 1})) }}

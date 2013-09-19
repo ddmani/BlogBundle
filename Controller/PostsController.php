@@ -20,16 +20,22 @@ class PostsController extends Controller
      * Lists all Posts entities.
      *
      */
-    public function indexAction()
+    public function indexAction($adminpage)
     {
         if ($this->get('security.context')->isGranted('ROLE_USER')){
             $em = $this->getDoctrine()->getManager();
 
             $entities = $em->getRepository('ddmaniBlogBundle:Posts')->findAll();
-
-            return $this->render('ddmaniBlogBundle:Posts:index.html.twig', array(
-                'entities' => $entities,
-            ));
+            if($adminpage == 'admin' ){
+                return $this->render('ddmaniBlogBundle:Posts:indexbo.html.twig', array(
+                    'entities' => $entities,
+                ));
+            }
+            else{
+                return $this->render('ddmaniBlogBundle:Posts:index.html.twig', array(
+                    'entities' => $entities,
+                ));
+            }
         }
     }
     /**

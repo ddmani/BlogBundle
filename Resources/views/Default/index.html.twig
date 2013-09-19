@@ -1,5 +1,8 @@
 {% extends "ddmaniBlogBundle::layout.html.twig" %}
 {% block blog %}
-Blog homepage
-{{test}}
+    <h1>Blog hompage</h1>
+
+    <div id="postlist">
+    {{ render(controller('ddmaniBlogBundle:Posts:index',{'adminpage': 'frontend'})) }}
+    </div>
 {% endblock blog %}

@@ -1,0 +1,53 @@
+{% extends "ddmaniBlogBundle::layout.html.twig" %}
+
+{% block body -%}
+    <h1>Posts list backoffice</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Posttitle</th>
+                <th>Postcontent</th>
+                <th>Postauthor</th>
+                <th>Postdatecreate</th>
+                <th>Postdatemodify</th>
+                <th>Poststatus</th>
+                <th>Postcommentcount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('ddmani_blog_post', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.postTitle }}</td>
+                <td>{{ entity.postContent }}</td>
+                <td>{{ entity.postAuthor }}</td>
+                <td>{% if entity.postDateCreate %}{{ entity.postDateCreate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.postDateModify %}{{ entity.postDateModify|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.postStatus }}</td>
+                <td>{{ entity.postCommentCount }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('ddmani_blog_post', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('post_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('post_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

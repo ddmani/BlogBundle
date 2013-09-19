@@ -1,6 +1,9 @@
 {% extends "::base.html.twig" %}
 {% block blog %}
 {% endblock blog %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
 {% block javascripts %}
     {{ parent() }}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
