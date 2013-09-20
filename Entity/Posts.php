@@ -64,7 +64,7 @@ class Posts
     /**
      * @var boolean
      *
-     * @ORM\Column(name="post_status", type="boolean")
+     * @ORM\Column(name="post_status", type="boolean", nullable=true)
      */
     private $postStatus;
 

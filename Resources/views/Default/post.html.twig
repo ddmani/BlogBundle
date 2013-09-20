@@ -7,7 +7,49 @@
             {{ render(controller('ddmaniBlogBundle:Posts:show',{'id': id })) }}
         </div>
         <div id="comments">
-            {{ render(controller('ddmaniBlogBundle:Comment:new',{'id': id })) }}
+            <div id="commentform">
+                {% if app.user.id is defined %}
+                    {{ render(controller('ddmaniBlogBundle:Comment:new',{'id': id })) }}
+                {% endif %}
+            </div>
+            <div id="commentlisting">
+            {{ render(controller('ddmaniBlogBundle:Comment:index',{'idpost': id })) }}
+            </div>
         </div>
     </div>
+    <script language="javascript">
+        $(document).ready(function(){ 
+            $("#addcommentform").submit(function(){
+                $.ajax({
+                        url: $(this).attr('action'), 
+                        type: $(this).attr('method'), 
+                        data: $(this).serialize(), 
+                        cache: false,
+                        success : function(code_html, statut){ 
+                            if ($("#commentlisting")){
+                                    $.ajax({
+                                        url: '{{ path("comment_postshow", {"idpost": id }) }}', 
+                                        type: 'GET', 
+                                        data: $(this).serialize(), 
+                                        cache: false,
+                                        success : function(code_html, statut){ 
+                                            $('#commentlisting').html(code_html);
+                                        },
+                                        error : function(resultat, statut, erreur){
+                                            alert("erreur");
+                                        }
+                                    });
+                                }
+                        },
+
+                        error : function(resultat, statut, erreur){
+                            alert("erreur");
+                        }
+                 });
+                 return false; // Bloquage soumission du formulaire   
+             });
+
+        });
+
+    </script>
 {% endblock blog %}

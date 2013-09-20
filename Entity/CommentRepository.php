@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
+    private $qb;
+    public function PostCommentList($id){
+        $this->qb = $this->createQueryBuilder('c')
+                         ->add('select', 'c')
+                         ->where("c.commentPost = :id")
+                         ->setParameter('id',$id)
+                         ->orderBy('c.commentDateCreate', 'ASC')
+                         ->getQuery();
+        return $this->qb->getResult();
+    }
 }

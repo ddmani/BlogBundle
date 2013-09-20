@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ddmani\BlogBundle\Entity\CommentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
@@ -72,7 +73,7 @@ class Comment
     /**
      * @var integer
      *
-     * @ORM\Column(name="comment_status", type="smallint")
+     * @ORM\Column(name="comment_status", type="boolean", nullable=true)
      */
     private $commentStatus;
 
@@ -326,5 +327,31 @@ class Comment
     public function getCommentUserId()
     {
         return $this->commentUserId;
+    }
+    
+    /**
+     * @ORM\prePersist
+     */
+    public function IncreaseCommentCount()
+    {
+        $postCommentCount = $this->getCommentPost()->getPostCommentCount();
+        $this->getCommentPost()->setPostCommentCount($postCommentCount+1);
+    }
+    
+    /**
+     * @ORM\preRemove
+     */
+    public function DecreaseCommentCount()
+    {
+        $postCommentCount = $this->getCommentPost()->getPostCommentCount();
+        $this->getCommentPost()->setPostCommentCount($postCommentCount-1);
+    }
+    
+    /**
+     * @ORM\PreUpdate
+     */
+    public function UpdateDateModify()
+    {
+        $this->setCommentDateModify(new \Datetime());
     }
 }

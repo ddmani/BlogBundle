@@ -22,20 +22,18 @@ class PostsController extends Controller
      */
     public function indexAction($adminpage)
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('ddmaniBlogBundle:Posts')->findAll();
 
-            $entities = $em->getRepository('ddmaniBlogBundle:Posts')->findAll();
-            if($adminpage == 'admin' ){
-                return $this->render('ddmaniBlogBundle:Posts:indexbo.html.twig', array(
-                    'entities' => $entities,
-                ));
-            }
-            else{
-                return $this->render('ddmaniBlogBundle:Posts:index.html.twig', array(
-                    'entities' => $entities,
-                ));
-            }
+        if($adminpage == 'admin' && $this->get('security.context')->isGranted('ROLE_USER')){
+            return $this->render('ddmaniBlogBundle:Posts:indexbo.html.twig', array(
+                'entities' => $entities,
+            ));
+        }
+        else{
+            return $this->render('ddmaniBlogBundle:Posts:index.html.twig', array(
+                'entities' => $entities,
+            ));
         }
     }
     /**
@@ -114,21 +112,18 @@ class PostsController extends Controller
      */
     public function showAction($id)
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-            $entity = $em->getRepository('ddmaniBlogBundle:Posts')->find($id);
+        $entity = $em->getRepository('ddmaniBlogBundle:Posts')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Posts entity.');
-            }
-
-            $deleteForm = $this->createDeleteForm($id);
-
-            return $this->render('ddmaniBlogBundle:Posts:show.html.twig', array(
-                'entity'      => $entity,
-                'delete_form' => $deleteForm->createView(),        ));
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Posts entity.');
         }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('ddmaniBlogBundle:Posts:show.html.twig', array(
+            'entity'      => $entity ));
     }
 
     /**
