@@ -24,7 +24,7 @@
                     success : function(code_html, statut){ 
                         if ($("#postlist")){
                                 $.ajax({
-                                    url: '{{ path("post") }}', 
+                                    url: '{{ path("post_admin") }}', 
                                     type: 'GET', 
                                     data: $(this).serialize(), 
                                     cache: false,

@@ -20,12 +20,13 @@ class PostsController extends Controller
      * Lists all Posts entities.
      *
      */
-    public function indexAction($adminpage)
+    public function indexAction($adminpage=null)
     {
+        $request = Request::createFromGlobals();
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('ddmaniBlogBundle:Posts')->findAll();
 
-        if($adminpage == 'admin' && $this->get('security.context')->isGranted('ROLE_USER')){
+        if(($adminpage == 'admin' || $request->isXmlHttpRequest()==true) && $this->get('security.context')->isGranted('ROLE_ADMIN')){
             return $this->render('ddmaniBlogBundle:Posts:indexbo.html.twig', array(
                 'entities' => $entities,
             ));
@@ -42,7 +43,7 @@ class PostsController extends Controller
      */
     public function createAction(Request $request)
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
             if($request->isXmlHttpRequest())
             {
                 $entity = new Posts();
@@ -95,7 +96,7 @@ class PostsController extends Controller
      */
     public function newAction()
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
             $entity = new Posts();
             $form   = $this->createCreateForm($entity);
 
@@ -132,7 +133,7 @@ class PostsController extends Controller
      */
     public function editAction($id)
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
             $em = $this->getDoctrine()->getManager();
 
             $entity = $em->getRepository('ddmaniBlogBundle:Posts')->find($id);
@@ -176,7 +177,7 @@ class PostsController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
             $em = $this->getDoctrine()->getManager();
 
             $entity = $em->getRepository('ddmaniBlogBundle:Posts')->find($id);
@@ -209,7 +210,7 @@ class PostsController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
             $form = $this->createDeleteForm($id);
             $form->handleRequest($request);
 

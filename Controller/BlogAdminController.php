@@ -8,7 +8,7 @@ class BlogAdminController extends Controller
 {
     public function indexAction()
     {
-        if ($this->get('security.context')->isGranted('ROLE_USER')){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')){
             return $this->render('ddmaniBlogBundle:Admin:index.html.twig', array('test'=>'Identifie'));
         }
         else{

@@ -2,29 +2,33 @@ post:
     pattern:  /
     defaults: { _controller: "ddmaniBlogBundle:Posts:index" }
 
+post_admin:
+    pattern:  /admin/list
+    defaults: { _controller: "ddmaniBlogBundle:Posts:index" }
+
 post_show:
     pattern:  /{id}/show
     defaults: { _controller: "ddmaniBlogBundle:Posts:show" }
 
 post_new:
-    pattern:  /new
+    pattern:  /admin/new
     defaults: { _controller: "ddmaniBlogBundle:Posts:new" }
 
 post_create:
-    pattern:  /create
+    pattern:  /admin/create
     defaults: { _controller: "ddmaniBlogBundle:Posts:create" }
     requirements: { _method: post }
 
 post_edit:
-    pattern:  /{id}/edit
+    pattern:  /admin/{id}/edit
     defaults: { _controller: "ddmaniBlogBundle:Posts:edit" }
 
 post_update:
-    pattern:  /{id}/update
+    pattern:  /admin/{id}/update
     defaults: { _controller: "ddmaniBlogBundle:Posts:update" }
     requirements: { _method: post|put }
 
 post_delete:
-    pattern:  /{id}/delete
+    pattern:  /admin/{id}/delete
     defaults: { _controller: "ddmaniBlogBundle:Posts:delete" }
     requirements: { _method: post|delete }
