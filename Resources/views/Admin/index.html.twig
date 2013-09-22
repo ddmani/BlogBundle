@@ -11,7 +11,7 @@
     </div>
 <script language="javascript">
     $(document).ready(function(){ 
-        $(".actionslink").on("click",function(){
+        $("body").on("click",".actionslink",function(){
             $.ajax({
                     url: $(this).attr('href'), 
                     type: 'GET', 
