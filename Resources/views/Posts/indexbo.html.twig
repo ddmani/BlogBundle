@@ -6,48 +6,79 @@
     <table class="records_list">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Posttitle</th>
-                <th>Postcontent</th>
-                <th>Postauthor</th>
-                <th>Postdatecreate</th>
-                <th>Postdatemodify</th>
-                <th>Poststatus</th>
-                <th>Postcommentcount</th>
-                <th>Actions</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
+        {% set i = 0 %}
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('ddmani_blog_post', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.postTitle }}</td>
-                <td>{{ entity.postContent }}</td>
                 <td>{{ entity.postAuthor }}</td>
-                <td>{% if entity.postDateCreate %}{{ entity.postDateCreate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.postCategory.categorieName }}</td>
                 <td>{% if entity.postDateModify %}{{ entity.postDateModify|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.postStatus }}</td>
-                <td>{{ entity.postCommentCount }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('ddmani_blog_post', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a class="actionslink" href="{{ path('post_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <div class="btn-group">
+                        <a class="btn btn-info" href="{{ path('ddmani_blog_post', { 'id': entity.id }) }}">Show</a>
+                        <a class="btn btn-success actionslink" href="{{ path('post_edit', { 'id': entity.id }) }}">Edit</a>
+                        <a class="btn btn-danger postdeletelink" href="{{ path('post_delete', { 'id': entity.id }) }}">Delete</a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <a class="btn btn-success actionslink" href="{{ path('post_new') }}">Create a new entry</a>
+    <script language="javascript">
 
-        <ul>
-        <li>
-            <a class="actionslink" href="{{ path('post_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+
+    $(document).ready(function(){ 
+        $(".postdeletelink").on("click",function(){
+            $.msgBox({
+                title: "Are You Sure",
+                content: "Would you delete this entry?",
+                type: "confirm",
+                buttons: [{ value: "Yes" }, { value: "No" }, { value: "Cancel"}],
+                success: function (result) {
+                    if (result == "Yes") {
+                        PostDelete();
+                    }
+                }
+            });
+            var url = $(this).attr('href');
+            var data = $(this).serialize();
+            
+            function PostDelete(){
+                $.ajax({
+                    url: url, 
+                    type: 'GET', 
+                    data: data, 
+                    cache: false,
+                    success : function(code_html, statut){ 
+                        $.ajax({
+                            url: '{{ path("post_admin") }}', 
+                            type: 'GET', 
+                            data: $(this).serialize(), 
+                            cache: false,
+                            success : function(code_html, statut){ 
+                                $('#postlist').html(code_html);
+                            },
+                            error : function(resultat, statut, erreur){
+                                alert("erreur");
+                            }
+                        });
+                    },
+                    error : function(resultat, statut, erreur){
+                        alert("erreur");
+                    }
+                 });
+            }
+            
+             return false; 
+         });
+    });
+    </script>
     {% endblock %}

@@ -17,7 +17,7 @@ class PostsType extends AbstractType
         $builder
             ->add('postTitle')
             ->add('postContent')
-            ->add('postStatus')
+            ->add('postStatus', 'checkbox', array('required' => false))
             ->add('postCategory', 'entity', array(
             'class' => 'ddmaniBlogBundle:Categories',
             'property' => 'CategorieName',

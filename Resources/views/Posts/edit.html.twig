@@ -5,14 +5,7 @@
 
     {{ form(edit_form,{'attr':{"id":"editform" }}) }}
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('post') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>{{ form(delete_form) }}</li>
-    </ul>
+    {{ form(delete_form,{'attr':{"id":"post-delete-form" }}) }}
     <script language="javascript">
         $(document).ready(function(){ 
             $("#editform").submit(function(){
@@ -23,18 +16,7 @@
                         cache: false,
                         success : function(code_html, statut){ 
                             if ($("#postlist")){
-                                $.ajax({
-                                    url: '{{ path("post_admin") }}', 
-                                    type: 'GET', 
-                                    data: $(this).serialize(), 
-                                    cache: false,
-                                    success : function(code_html, statut){ 
-                                        $('#postlist').html(code_html);
-                                    },
-                                    error : function(resultat, statut, erreur){
-                                        alert("erreur");
-                                    }
-                                });
+                                RefreshPostList();
                             }
                         },
 
@@ -44,7 +26,38 @@
                  });
                  return false; // Bloquage soumission du formulaire   
              });
+            $("#post-delete-form").submit(function(){
+                $.ajax({
+                        url: $(this).attr('action'), 
+                        type: $(this).attr('method'), 
+                        data: $(this).serialize(), 
+                        cache: false,
+                        success : function(code_html, statut){ 
+                            if ($("#postlist")){
+                                RefreshPostList();
+                            }
+                        },
 
+                        error : function(resultat, statut, erreur){
+                            alert("erreur");
+                        }
+                 });
+                 return false; // Bloquage soumission du formulaire   
+             });
+             function RefreshPostList(){
+                $.ajax({
+                    url: '{{ path("post_admin") }}', 
+                    type: 'GET', 
+                    data: $(this).serialize(), 
+                    cache: false,
+                    success : function(code_html, statut){ 
+                        $('#postlist').html(code_html);
+                    },
+                    error : function(resultat, statut, erreur){
+                        alert("erreur");
+                    }
+                });
+             }
         });
 
     </script>

@@ -85,7 +85,9 @@ class PostsController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Create','attr' => array(
+            'class'=>'btn btn-success'
+        )));
 
         return $form;
     }
@@ -167,7 +169,9 @@ class PostsController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Update','attr' => array(
+            'class'=>'btn btn-success'
+        )));
 
         return $form;
     }
@@ -214,7 +218,7 @@ class PostsController extends Controller
             $form = $this->createDeleteForm($id);
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isValid() || $request->isXmlHttpRequest()) {
                 $em = $this->getDoctrine()->getManager();
                 $entity = $em->getRepository('ddmaniBlogBundle:Posts')->find($id);
 
@@ -242,7 +246,9 @@ class PostsController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('post_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Delete','attr' => array(
+            'class'=>'btn btn-danger'
+            )))
             ->getForm()
         ;
     }

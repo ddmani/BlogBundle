@@ -31,4 +31,4 @@ post_update:
 post_delete:
     pattern:  /admin/{id}/delete
     defaults: { _controller: "ddmaniBlogBundle:Posts:delete" }
-    requirements: { _method: post|delete }
+    requirements: { _method: get|post|delete }
