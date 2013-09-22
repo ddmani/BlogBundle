@@ -27,21 +27,37 @@
                  return false; // Bloquage soumission du formulaire   
              });
             $("#post-delete-form").submit(function(){
-                $.ajax({
-                        url: $(this).attr('action'), 
-                        type: $(this).attr('method'), 
-                        data: $(this).serialize(), 
-                        cache: false,
-                        success : function(code_html, statut){ 
-                            if ($("#postlist")){
-                                RefreshPostList();
-                            }
-                        },
-
-                        error : function(resultat, statut, erreur){
-                            alert("erreur");
+               $.msgBox({
+                    title: "Are You Sure",
+                    content: "Would you delete this entry?",
+                    type: "confirm",
+                    buttons: [{ value: "Yes" }, { value: "No" }, { value: "Cancel"}],
+                    success: function (result) {
+                        if (result == "Yes") {
+                            PostDelete(url,type,data);
                         }
-                 });
+                    }
+                }); 
+                var url = $(this).attr('action');
+                var data = $(this).serialize();
+                var type = $(this).attr('method');
+                function PostDelete(url,type,data){
+                    $.ajax({
+                            url: url, 
+                            type: type, 
+                            data: data, 
+                            cache: false,
+                            success : function(code_html, statut){ 
+                                if ($("#postlist")){
+                                    RefreshPostList();
+                                }
+                            },
+
+                            error : function(resultat, statut, erreur){
+                                alert("erreur");
+                            }
+                     });
+                }
                  return false; // Bloquage soumission du formulaire   
              });
              function RefreshPostList(){
@@ -52,6 +68,9 @@
                     cache: false,
                     success : function(code_html, statut){ 
                         $('#postlist').html(code_html);
+                        if($("#actioncontent")){
+                            $('#actioncontent').html('');
+                        }
                     },
                     error : function(resultat, statut, erreur){
                         alert("erreur");

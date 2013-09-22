@@ -44,41 +44,41 @@
                 buttons: [{ value: "Yes" }, { value: "No" }, { value: "Cancel"}],
                 success: function (result) {
                     if (result == "Yes") {
-                        PostDelete();
+                        PostDelete(url,method,data);
                     }
                 }
             });
             var url = $(this).attr('href');
             var data = $(this).serialize();
-            
-            function PostDelete(){
-                $.ajax({
-                    url: url, 
-                    type: 'GET', 
-                    data: data, 
-                    cache: false,
-                    success : function(code_html, statut){ 
-                        $.ajax({
-                            url: '{{ path("post_admin") }}', 
-                            type: 'GET', 
-                            data: $(this).serialize(), 
-                            cache: false,
-                            success : function(code_html, statut){ 
-                                $('#postlist').html(code_html);
-                            },
-                            error : function(resultat, statut, erreur){
-                                alert("erreur");
-                            }
-                        });
-                    },
-                    error : function(resultat, statut, erreur){
-                        alert("erreur");
-                    }
-                 });
-            }
+            var method = $(this).attr('method');
             
              return false; 
          });
+         function PostDelete(url,method,data){
+            $.ajax({
+                url: url, 
+                type: method, 
+                data: data, 
+                cache: false,
+                success : function(code_html, statut){ 
+                    $.ajax({
+                        url: '{{ path("post_admin") }}', 
+                        type: 'GET', 
+                        data: $(this).serialize(), 
+                        cache: false,
+                        success : function(code_html, statut){ 
+                            $('#postlist').html(code_html);
+                        },
+                        error : function(resultat, statut, erreur){
+                            alert("erreur");
+                        }
+                    });
+                },
+                error : function(resultat, statut, erreur){
+                    alert("erreur");
+                }
+             });
+        }
     });
     </script>
     {% endblock %}
