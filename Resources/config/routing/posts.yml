@@ -3,8 +3,8 @@ post:
     defaults: { _controller: "ddmaniBlogBundle:Posts:index" }
 
 post_admin:
-    pattern:  /admin/list
-    defaults: { _controller: "ddmaniBlogBundle:Posts:index" }
+    pattern:  /admin/list/{page}
+    defaults: { _controller: ddmaniBlogBundle:Posts:index, page:1 }
 
 post_show:
     pattern:  /{id}/show

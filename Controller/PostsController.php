@@ -20,11 +20,12 @@ class PostsController extends Controller
      * Lists all Posts entities.
      *
      */
-    public function indexAction($adminpage=null)
+    public function indexAction($adminpage=null,$page=1)
     {
         $request = Request::createFromGlobals();
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('ddmaniBlogBundle:Posts')->findAll();
+        $ResultsPerPage = $this->container->getParameter('posts.maxlinesperpage');
+        $entities = $em->getRepository('ddmaniBlogBundle:Posts')->PostListPage($page,$ResultsPerPage);
 
         if(($adminpage == 'admin' || $request->isXmlHttpRequest()==true) && $this->get('security.context')->isGranted('ROLE_ADMIN')){
             return $this->render('ddmaniBlogBundle:Posts:indexbo.html.twig', array(
