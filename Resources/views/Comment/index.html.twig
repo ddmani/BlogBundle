@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Comment list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Commentauthoremail</th>
+                <th>Commentauthorip</th>
+                <th>Commentauthorurl</th>
+                <th>Commentdatecreate</th>
+                <th>Commentdatemodify</th>
+                <th>Commentcontent</th>
+                <th>Commentstatus</th>
+                <th>Commentparentid</th>
+                <th>Commentuserid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.commentAuthorEmail }}</td>
+                <td>{{ entity.commentAuthorIp }}</td>
+                <td>{{ entity.commentAuthorUrl }}</td>
+                <td>{% if entity.commentDateCreate %}{{ entity.commentDateCreate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.commentDateModify %}{{ entity.commentDateModify|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.commentContent }}</td>
+                <td>{{ entity.commentStatus }}</td>
+                <td>{{ entity.commentParentId }}</td>
+                <td>{{ entity.commentUserId }}</td>
+                <td>
+                {% if app.user.id is defined and entity.commentUserId == app.user.id or is_granted('ROLE_ADMIN') %}
+                    <ul>
+                        <li>
+                            <a href="{{ path('comment_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

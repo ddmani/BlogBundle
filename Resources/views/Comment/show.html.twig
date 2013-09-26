@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Comment</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Commentauthoremail</th>
+                <td>{{ entity.commentAuthorEmail }}</td>
+            </tr>
+            <tr>
+                <th>Commentauthorip</th>
+                <td>{{ entity.commentAuthorIp }}</td>
+            </tr>
+            <tr>
+                <th>Commentauthorurl</th>
+                <td>{{ entity.commentAuthorUrl }}</td>
+            </tr>
+            <tr>
+                <th>Commentdatecreate</th>
+                <td>{{ entity.commentDateCreate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Commentdatemodify</th>
+                <td>{{ entity.commentDateModify|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Commentcontent</th>
+                <td>{{ entity.commentContent }}</td>
+            </tr>
+            <tr>
+                <th>Commentstatus</th>
+                <td>{{ entity.commentStatus }}</td>
+            </tr>
+            <tr>
+                <th>Commentparentid</th>
+                <td>{{ entity.commentParentId }}</td>
+            </tr>
+            <tr>
+                <th>Commentuserid</th>
+                <td>{{ entity.commentUserId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('comment') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('comment_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

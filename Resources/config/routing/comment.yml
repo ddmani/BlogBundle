@@ -1,0 +1,35 @@
+comment:
+    pattern:  /
+    defaults: { _controller: "ddmaniBlogBundle:Comment:index" }
+
+comment_postshow:
+    pattern:  /postcomment/{idpost}
+    defaults: { _controller: "ddmaniBlogBundle:Comment:index" }
+    requirements: { _method: get }
+
+comment_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ddmaniBlogBundle:Comment:show" }
+
+comment_new:
+    pattern:  /user/new
+    defaults: { _controller: "ddmaniBlogBundle:Comment:new" }
+
+comment_create:
+    pattern:  /user/create/{id}
+    defaults: { _controller: "ddmaniBlogBundle:Comment:create" }
+    requirements: { _method: post }
+
+comment_edit:
+    pattern:  /user/{id}/edit
+    defaults: { _controller: "ddmaniBlogBundle:Comment:edit" }
+
+comment_update:
+    pattern:  /user/{id}/update
+    defaults: { _controller: "ddmaniBlogBundle:Comment:update" }
+    requirements: { _method: post|put }
+
+comment_delete:
+    pattern:  /user/{id}/delete
+    defaults: { _controller: "ddmaniBlogBundle:Comment:delete" }
+    requirements: { _method: post|delete }
