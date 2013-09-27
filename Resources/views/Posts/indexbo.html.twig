@@ -57,12 +57,8 @@
         }
         $(".changepage").on("click",function(){
             refreshpage=$(this).attr('rel');
-            if(refreshpage==1){
-                urlcomplement='';
-            }
-            else{
-                urlcomplement='/'+refreshpage;
-            }
+            (refreshpage==1)?urlcomplement='':urlcomplement='/'+refreshpage;
+
             $.ajax({
                 url: '{{ path("post_admin") }}'+urlcomplement, 
                 type: 'GET', 
