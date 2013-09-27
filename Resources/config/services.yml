@@ -1,6 +1,6 @@
 parameters:
 #    ddmani_blog.example.class: ddmani\BlogBundle\Example
-    posts.maxlinesperpage: 10 
+    posts.maxlinesperpage: 2 
 
 services:
 #    ddmani_blog.example:

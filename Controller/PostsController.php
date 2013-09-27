@@ -26,10 +26,14 @@ class PostsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $ResultsPerPage = $this->container->getParameter('posts.maxlinesperpage');
         $entities = $em->getRepository('ddmaniBlogBundle:Posts')->PostListPage($page,$ResultsPerPage);
+        $postcount = $em->getRepository('ddmaniBlogBundle:Posts')->PostCount();
 
         if(($adminpage == 'admin' || $request->isXmlHttpRequest()==true) && $this->get('security.context')->isGranted('ROLE_ADMIN')){
             return $this->render('ddmaniBlogBundle:Posts:indexbo.html.twig', array(
                 'entities' => $entities,
+                'postcount' => $postcount,
+                'ResultsPerPage' => $ResultsPerPage,
+                'page' => $page,
             ));
         }
         else{

@@ -8,6 +8,8 @@
     {{ form(delete_form,{'attr':{"id":"post-delete-form" }}) }}
     <script language="javascript">
         $(document).ready(function(){ 
+            var page=$("#currentpage").attr('rel');
+            //alert(page);
             $("#editform").submit(function(){
                 $.ajax({
                         url: $(this).attr('action'), 
@@ -16,7 +18,7 @@
                         cache: false,
                         success : function(code_html, statut){ 
                             if ($("#postlist")){
-                                RefreshPostList();
+                                RefreshPostList(page);
                             }
                         },
 
@@ -60,9 +62,15 @@
                 }
                  return false; // Bloquage soumission du formulaire   
              });
-             function RefreshPostList(){
+             function RefreshPostList(refreshpage=1){
+                if(refreshpage==1){
+                    urlcomplement='';
+                }
+                else{
+                    urlcomplement='/'+refreshpage;
+                }
                 $.ajax({
-                    url: '{{ path("post_admin") }}', 
+                    url: '{{ path("post_admin") }}'+urlcomplement, 
                     type: 'GET', 
                     data: $(this).serialize(), 
                     cache: false,
