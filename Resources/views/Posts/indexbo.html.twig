@@ -37,7 +37,7 @@
 
 
     $(document).ready(function(){ 
-        for(var x=0 , page = '{{page}}' , button = '';x<({{postcount}}/{{ResultsPerPage}});x++){
+        for(var x=0 , page = {{page}} , button = '' , PageMax=3, PageNumbers=(Math.round({{postcount}}/{{ResultsPerPage}}));x<PageNumbers && x<PageMax;x++){
  
             if(page==(x+1)){
                 button = 'btn btn-success';
@@ -48,10 +48,15 @@
                 currentpage = '';
             }
             if(x===0){
-                $('#PagesLinks').html('Page: <a '+currentpage+' rel="'+(x+1)+'" class="btn btn-'+button+' changepage" href="'+"{{ path('post_admin', { 'page': '1' }) }}"+'">'+(x+1)+'</a>');
+                $('#PagesLinks').html('Page: ');
+                ((page-1)!=0)?$('#PagesLinks').append('<a '+currentpage+' rel="'+(page-1)+'" class="btn btn-info changepage" href="'+"{{ path('post_admin') }}/"+(page-1)+'"> < </a>'):'';
+                $('#PagesLinks').append('<a '+currentpage+' rel="'+(x+1)+'" class="btn btn-'+button+' changepage" href="'+"{{ path('post_admin', { 'page': '1' }) }}"+'">'+(x+1)+'</a>');
             }
             else{
                 $('#PagesLinks').append('<a '+currentpage+' rel="'+(x+1)+'" class="btn btn-'+button+' changepage" href="'+"{{ path('post_admin') }}/"+(x+1)+'">'+(x+1)+'</a>');
+                (x==PageMax-1 && page>PageMax)?$('#PagesLinks').append('<a '+currentpage+' rel="'+page+'" class="btn btn-success changepage" href="'+"{{ path('post_admin') }}/"+page+'">'+page+'</a>'):'';
+                (x==PageMax-1 && page!=PageNumbers)?$('#PagesLinks').append('<a '+currentpage+' rel="'+(page+1)+'" class="btn btn-info changepage" href="'+"{{ path('post_admin') }}/"+(page+1)+'"> > </a>'):'';
+                (x==PageMax-1)?$('#PagesLinks').append('<a '+currentpage+' rel="'+PageNumbers+'" class="btn btn-info changepage" href="'+"{{ path('post_admin') }}/"+PageNumbers+'"> >> </a>'):'';
             }
             
         }
